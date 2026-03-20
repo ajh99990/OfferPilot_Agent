@@ -11,6 +11,7 @@
 
 import { createAgent } from "langchain";
 import { ChatOpenAI } from "@langchain/openai";
+import { MemorySaver } from "@langchain/langgraph-checkpoint";
 import { TOOLS } from "./tools.js";
 import { SYSTEM_PROMPT } from "./prompts.js";
 
@@ -41,12 +42,17 @@ const model = new ChatOpenAI({
     : undefined,
 });
 
+const checkpointer = new MemorySaver();
+
 export const agent = createAgent({
   // The model uses an OpenAI-compatible API endpoint configured via environment variables.
   model,
 
   // Tools available to the agent
   tools: TOOLS,
+
+  // Persist thread state so LangGraph history/thread APIs work.
+  checkpointer,
 
   // System prompt defining agent behavior
   systemPrompt: SYSTEM_PROMPT,

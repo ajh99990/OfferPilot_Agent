@@ -17,7 +17,7 @@ console.log("  • Search the knowledge base\n");
 
 // Example conversation
 const questions = [
-  "What time is it right now?",
+  "你好！你能做什么？",
   "What's the weather like in San Francisco?",
   "Calculate 42 * 17 + 100",
 ];

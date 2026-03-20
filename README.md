@@ -184,3 +184,7 @@ All agent invocations will automatically be traced, showing:
 ## 📝 License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+
+启动本地调试
+npx @langchain/langgraph-cli dev
