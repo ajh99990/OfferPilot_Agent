@@ -10,6 +10,7 @@
  */
 
 import { createAgent } from "langchain";
+import { ChatOpenAI } from "@langchain/openai";
 import { TOOLS } from "./tools.js";
 import { SYSTEM_PROMPT } from "./prompts.js";
 
@@ -30,10 +31,19 @@ import { SYSTEM_PROMPT } from "./prompts.js";
  * console.log(result.content);
  * ```
  */
+const model = new ChatOpenAI({
+  model: process.env.OPENAI_MODEL ?? "gpt-5.4",
+  apiKey: process.env.OPENAI_API_KEY,
+  configuration: process.env.OPENAI_BASE_URL
+    ? {
+        baseURL: process.env.OPENAI_BASE_URL,
+      }
+    : undefined,
+});
+
 export const agent = createAgent({
-  // The model to use - supports "provider:model" format
-  // Uses ANTHROPIC_API_KEY or OPENAI_API_KEY from environment
-  model: "anthropic:claude-haiku-4-5",
+  // The model uses an OpenAI-compatible API endpoint configured via environment variables.
+  model,
 
   // Tools available to the agent
   tools: TOOLS,
