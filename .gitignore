@@ -15,3 +15,4 @@ dist
 
 # LangGraph API
 .langgraph_api
+note.md
