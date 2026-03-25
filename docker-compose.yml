@@ -4,6 +4,8 @@ volumes:
 services:
     langgraph-redis:
         image: redis:6
+        networks:
+            - offerpilot_agent_shared
         healthcheck:
             test: redis-cli ping
             interval: 5s
@@ -13,6 +15,8 @@ services:
         image: postgres:16
         ports:
             - "6623:5432"
+        networks:
+            - offerpilot_agent_shared
         environment:
             POSTGRES_DB: postgres
             POSTGRES_USER: postgres
@@ -29,6 +33,8 @@ services:
         image: ${IMAGE_NAME:-react-agent-js}
         ports:
             - "8198:8000"
+        networks:
+            - offerpilot_agent_shared
         depends_on:
             langgraph-redis:
                 condition: service_healthy
@@ -40,3 +46,7 @@ services:
             REDIS_URI: redis://langgraph-redis:6379
             LANGSMITH_API_KEY: ${LANGSMITH_API_KEY:-}
             DATABASE_URI: postgres://postgres:postgres@langgraph-postgres:5432/postgres?sslmode=disable
+
+networks:
+  offerpilot_agent_shared:
+    external: true
