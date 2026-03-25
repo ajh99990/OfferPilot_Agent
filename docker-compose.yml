@@ -12,7 +12,7 @@ services:
     langgraph-postgres:
         image: postgres:16
         ports:
-            - "5432:5432"
+            - "6623:5432"
         environment:
             POSTGRES_DB: postgres
             POSTGRES_USER: postgres
@@ -28,7 +28,7 @@ services:
     langgraph-api:
         image: ${IMAGE_NAME:-react-agent-js}
         ports:
-            - "8123:8000"
+            - "8198:8000"
         depends_on:
             langgraph-redis:
                 condition: service_healthy
